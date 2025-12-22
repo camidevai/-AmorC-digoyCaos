@@ -1,0 +1,216 @@
+.ai-explanation-section {
+    background: var(--color-dark);
+}
+
+.section-subtitle {
+    font-size: 1.25rem;
+    color: var(--color-light-gray);
+    margin-bottom: var(--spacing-2xl);
+    font-family: var(--font-display);
+}
+
+.highlight {
+    color: var(--color-tertiary);
+    font-weight: 600;
+}
+
+.ai-cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: var(--spacing-lg);
+    margin-bottom: var(--spacing-2xl);
+}
+
+.ai-card {
+    background: rgba(26, 31, 58, 0.6);
+    backdrop-filter: blur(10px);
+    border: 2px solid;
+    border-radius: var(--radius-xl);
+    padding: var(--spacing-xl);
+    transition: all var(--transition-base);
+    position: relative;
+    overflow: hidden;
+}
+
+.ai-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: var(--gradient-primary);
+    transform: scaleX(0);
+    transition: transform var(--transition-base);
+}
+
+.ai-card:hover::before {
+    transform: scaleX(1);
+}
+
+.ai-card-warm {
+    border-color: var(--color-warm-orange);
+}
+
+.ai-card-warm::before {
+    background: var(--gradient-warm);
+}
+
+.ai-card-primary {
+    border-color: var(--color-primary);
+}
+
+.ai-card-secondary {
+    border-color: var(--color-secondary);
+}
+
+.ai-card-tertiary {
+    border-color: var(--color-tertiary);
+}
+
+.ai-card:hover {
+    box-shadow: var(--shadow-xl), 0 0 30px rgba(92, 136, 252, 0.2);
+    transform: translateY(-5px);
+}
+
+.ai-card-icon {
+    font-size: 3rem;
+    margin-bottom: var(--spacing-md);
+    color: var(--color-tertiary);
+}
+
+.ai-card-warm .ai-card-icon {
+    color: var(--color-warm-orange);
+}
+
+.ai-card-primary .ai-card-icon {
+    color: var(--color-primary);
+}
+
+.ai-card-secondary .ai-card-icon {
+    color: var(--color-secondary);
+}
+
+.ai-card-tertiary .ai-card-icon {
+    color: var(--color-tertiary);
+}
+
+.ai-card-title {
+    font-size: 1.5rem;
+    margin-bottom: var(--spacing-md);
+    color: var(--color-white);
+}
+
+.ai-card-list {
+    list-style: none;
+    padding: 0;
+}
+
+.ai-card-list li {
+    padding: var(--spacing-xs) 0;
+    padding-left: var(--spacing-md);
+    position: relative;
+    color: var(--color-light-gray);
+    font-size: 1rem;
+    line-height: 1.6;
+}
+
+.ai-card-list li::before {
+    content: '→';
+    position: absolute;
+    left: 0;
+    color: var(--color-tertiary);
+    font-weight: bold;
+}
+
+.ai-card-warm .ai-card-list li::before {
+    color: var(--color-warm-orange);
+}
+
+.ai-card-primary .ai-card-list li::before {
+    color: var(--color-primary);
+}
+
+.ai-card-secondary .ai-card-list li::before {
+    color: var(--color-secondary);
+}
+
+/* Prompt Demo */
+.prompt-demo {
+    background: rgba(26, 31, 58, 0.8);
+    backdrop-filter: blur(20px);
+    border: 2px solid var(--color-tertiary);
+    border-radius: var(--radius-2xl);
+    padding: var(--spacing-2xl);
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.prompt-demo-title {
+    text-align: center;
+    margin-bottom: var(--spacing-lg);
+    font-size: 1.75rem;
+}
+
+.prompt-form {
+    display: flex;
+    gap: var(--spacing-md);
+    margin-bottom: var(--spacing-lg);
+}
+
+.prompt-input {
+    flex: 1;
+    padding: var(--spacing-md);
+    background: rgba(10, 14, 39, 0.8);
+    border: 2px solid rgba(92, 136, 252, 0.3);
+    border-radius: var(--radius-lg);
+    color: var(--color-white);
+    font-size: 1rem;
+    font-family: var(--font-primary);
+    transition: all var(--transition-base);
+}
+
+.prompt-input:focus {
+    outline: none;
+    border-color: var(--color-tertiary);
+    box-shadow: 0 0 0 3px rgba(92, 136, 252, 0.1);
+}
+
+.prompt-input::placeholder {
+    color: var(--color-gray);
+}
+
+.prompt-response {
+    background: rgba(14, 90, 249, 0.1);
+    border-left: 4px solid var(--color-primary);
+    border-radius: var(--radius-md);
+    padding: var(--spacing-lg);
+}
+
+.response-label {
+    font-weight: 600;
+    color: var(--color-tertiary);
+    margin-bottom: var(--spacing-sm);
+    font-family: var(--font-display);
+}
+
+.prompt-response p {
+    color: var(--color-light-gray);
+    line-height: 1.8;
+    margin: 0;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .ai-cards-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .prompt-form {
+        flex-direction: column;
+    }
+
+    .prompt-demo {
+        padding: var(--spacing-lg);
+    }
+}

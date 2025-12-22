@@ -1,0 +1,217 @@
+.workshop-section {
+    background: linear-gradient(180deg, var(--color-dark) 0%, var(--color-dark-secondary) 100%);
+}
+
+.workshop-container {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: var(--spacing-2xl);
+    align-items: start;
+}
+
+/* Checklist */
+.workshop-checklist {
+    position: sticky;
+    top: var(--spacing-lg);
+}
+
+.checklist-title {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    font-size: 1.5rem;
+    margin-bottom: var(--spacing-lg);
+    color: var(--color-white);
+}
+
+.checklist {
+    list-style: none;
+    padding: 0;
+    margin-bottom: var(--spacing-lg);
+}
+
+.checklist-item {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    padding: var(--spacing-md);
+    margin-bottom: var(--spacing-sm);
+    background: rgba(26, 31, 58, 0.4);
+    border: 2px solid rgba(92, 136, 252, 0.2);
+    border-radius: var(--radius-lg);
+    transition: all var(--transition-base);
+    color: var(--color-light-gray);
+}
+
+.checklist-item.checked {
+    background: rgba(92, 136, 252, 0.1);
+    border-color: var(--color-tertiary);
+}
+
+.check-icon {
+    font-size: 1.25rem;
+    color: rgba(92, 136, 252, 0.3);
+    transition: all var(--transition-base);
+}
+
+.checklist-item.checked .check-icon {
+    color: var(--color-tertiary);
+    transform: scale(1.2);
+}
+
+.tooltip-box {
+    background: rgba(255, 107, 53, 0.1);
+    border-left: 4px solid var(--color-warm-orange);
+    border-radius: var(--radius-md);
+    padding: var(--spacing-md);
+    margin-top: var(--spacing-lg);
+}
+
+.tooltip-box p {
+    margin: 0;
+    color: var(--color-light-gray);
+    font-size: 0.95rem;
+    line-height: 1.6;
+}
+
+.tooltip-box strong {
+    color: var(--color-warm-orange);
+}
+
+/* Form Builder */
+.workshop-builder {
+    background: rgba(26, 31, 58, 0.6);
+    backdrop-filter: blur(10px);
+    border: 2px solid var(--color-tertiary);
+    border-radius: var(--radius-2xl);
+    padding: var(--spacing-2xl);
+}
+
+.builder-form {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-lg);
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-xs);
+}
+
+.form-group label {
+    font-weight: 600;
+    color: var(--color-white);
+    font-family: var(--font-display);
+    font-size: 1rem;
+}
+
+.form-group input {
+    padding: var(--spacing-md);
+    background: rgba(10, 14, 39, 0.8);
+    border: 2px solid rgba(92, 136, 252, 0.3);
+    border-radius: var(--radius-lg);
+    color: var(--color-white);
+    font-size: 1rem;
+    font-family: var(--font-primary);
+    transition: all var(--transition-base);
+}
+
+.form-group input:focus {
+    outline: none;
+    border-color: var(--color-tertiary);
+    box-shadow: 0 0 0 3px rgba(92, 136, 252, 0.1);
+}
+
+.form-group input::placeholder {
+    color: var(--color-gray);
+}
+
+.btn-generate {
+    margin-top: var(--spacing-md);
+    width: 100%;
+    justify-content: center;
+    font-size: 1.125rem;
+}
+
+/* Generated Prompt */
+.generated-prompt {
+    margin-top: var(--spacing-xl);
+    background: rgba(14, 90, 249, 0.1);
+    border: 2px solid var(--color-primary);
+    border-radius: var(--radius-xl);
+    padding: var(--spacing-lg);
+}
+
+.prompt-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--spacing-md);
+    flex-wrap: wrap;
+    gap: var(--spacing-sm);
+}
+
+.prompt-header h4 {
+    margin: 0;
+    color: var(--color-white);
+    font-size: 1.25rem;
+}
+
+.btn-copy {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+    padding: var(--spacing-xs) var(--spacing-md);
+    background: var(--color-primary);
+    color: var(--color-white);
+    border: none;
+    border-radius: var(--radius-md);
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all var(--transition-base);
+}
+
+.btn-copy:hover {
+    background: var(--color-secondary);
+    transform: translateY(-2px);
+}
+
+.prompt-text {
+    background: rgba(10, 14, 39, 0.6);
+    padding: var(--spacing-md);
+    border-radius: var(--radius-md);
+    color: var(--color-light-gray);
+    line-height: 1.8;
+    font-size: 1rem;
+    margin: 0;
+    word-wrap: break-word;
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+    .workshop-container {
+        grid-template-columns: 1fr;
+    }
+
+    .workshop-checklist {
+        position: static;
+    }
+}
+
+@media (max-width: 768px) {
+    .workshop-builder {
+        padding: var(--spacing-lg);
+    }
+
+    .prompt-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .btn-copy {
+        width: 100%;
+        justify-content: center;
+    }
+}
