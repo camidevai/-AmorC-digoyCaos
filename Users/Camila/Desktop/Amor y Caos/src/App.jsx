@@ -1,6 +1,8 @@
 import { useEffect } from 'react';
 import Hero from './components/Hero';
-import StoryCarousel from './components/StoryCarousel';
+import StoryCarouselCami from './components/StoryCarouselCami';
+import StoryBridge from './components/StoryBridge';
+import StoryCarouselDaniel from './components/StoryCarouselDaniel';
 import AIExplanation from './components/AIExplanation';
 import PromptWorkshop from './components/PromptWorkshop';
 import InformatikAI from './components/InformatikAI';
@@ -26,25 +28,30 @@ function App() {
         {/* Section 1: Hero */}
         <Hero />
 
-        {/* Section 2: Story Carousel */}
-        <StoryCarousel />
+        {/* Section 2: Historia de Cami */}
+        <StoryCarouselCami />
 
-        {/* Section 3: AI Explanation */}
+        {/* Section 3: Capítulo Puente */}
+        <StoryCarouselDaniel />
+
+        {/* Section 4: Historia de Daniel */}
+        <StoryBridge />
+        {/* Section 5: AI Explanation */}
         <AIExplanation />
 
-        {/* Section 4: Prompt Workshop */}
+        {/* Section 6: Prompt Workshop */}
         <PromptWorkshop />
 
-        {/* Section 5: InformatiK-AI */}
+        {/* Section 7: InformatiK-AI */}
         <InformatikAI />
 
-        {/* Section 6: AI Hallucination */}
+        {/* Section 8: AI Hallucination */}
         <AIHallucination />
 
-        {/* Section 7: Resources */}
+        {/* Section 9: Resources */}
         <Resources />
 
-        {/* Section 8: Final CTA */}
+        {/* Section 10: Final CTA */}
         <FinalCTA />
       </main>
     </div>

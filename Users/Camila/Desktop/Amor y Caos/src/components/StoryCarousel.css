@@ -62,6 +62,15 @@
     animation: float 3s ease-in-out infinite;
 }
 
+.story-video {
+    width: 100%;
+    max-width: 500px;
+    height: auto;
+    border-radius: var(--radius-lg);
+    margin-bottom: var(--spacing-md);
+    box-shadow: var(--shadow-lg);
+}
+
 .story-year {
     display: inline-block;
     background: var(--gradient-primary);
