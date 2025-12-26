@@ -13,17 +13,14 @@ const StoryBridge = () => {
                     transition={{ duration: 0.8 }}
                 >
                     <h2 className="bridge-title">
-                        🚀 Y así nació <span className="gradient-text">Informatik-AI</span>
+                        🚀 Qué es <span className="gradient-text">Informatik-AI</span>
                     </h2>
 
                     <div className="bridge-video-container">
-                        <motion.video
-                            src="/informatikAI/nacimiento.mp4"
+                        <motion.img
+                            src="/img/informatik-ai.png"
+                            alt="Informatik-AI"
                             className="bridge-video"
-                            autoPlay
-                            loop
-                            muted
-                            playsInline
                             initial={{ scale: 0.9, opacity: 0 }}
                             whileInView={{ scale: 1, opacity: 1 }}
                             viewport={{ once: true }}
@@ -48,29 +45,6 @@ const StoryBridge = () => {
                         <p className="bridge-highlight">
                             <strong>Creamos software con Inteligencia Artificial</strong>
                         </p>
-                    </motion.div>
-
-                    <motion.div
-                        className="bridge-stats"
-                        initial={{ opacity: 0 }}
-                        whileInView={{ opacity: 1 }}
-                        viewport={{ once: true }}
-                        transition={{ delay: 0.7, duration: 0.6 }}
-                    >
-                        <div className="stat-item">
-                            <div className="stat-icon">💻</div>
-                            <div className="stat-label">Desarrollo de Software</div>
-                        </div>
-                        <div className="stat-plus">+</div>
-                        <div className="stat-item">
-                            <div className="stat-icon">🤖</div>
-                            <div className="stat-label">Inteligencia Artificial</div>
-                        </div>
-                        <div className="stat-equals">=</div>
-                        <div className="stat-item stat-result">
-                            <div className="stat-icon">🚀</div>
-                            <div className="stat-label">Informatik-AI</div>
-                        </div>
                     </motion.div>
 
                     <motion.p

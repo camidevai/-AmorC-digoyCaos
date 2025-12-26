@@ -5,7 +5,6 @@ import StoryBridge from './components/StoryBridge';
 import StoryCarouselDaniel from './components/StoryCarouselDaniel';
 import AIExplanation from './components/AIExplanation';
 import PromptWorkshop from './components/PromptWorkshop';
-import InformatikAI from './components/InformatikAI';
 import AIHallucination from './components/AIHallucination';
 import Resources from './components/Resources';
 import FinalCTA from './components/FinalCTA';
@@ -42,8 +41,6 @@ function App() {
         {/* Section 6: Prompt Workshop */}
         <PromptWorkshop />
 
-        {/* Section 7: InformatiK-AI */}
-        <InformatikAI />
 
         {/* Section 8: AI Hallucination */}
         <AIHallucination />
