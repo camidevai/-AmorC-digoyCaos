@@ -13,12 +13,12 @@ const StoryBridge = () => {
                     transition={{ duration: 0.8 }}
                 >
                     <h2 className="bridge-title">
-                        ✨ Cuando nuestras historias <span className="gradient-text">se cruzaron</span>
+                        🚀 Y así nació <span className="gradient-text">Informatik-AI</span>
                     </h2>
 
                     <div className="bridge-video-container">
                         <motion.video
-                            src="/historiaCompartida/nochesEstudio.mp4"
+                            src="/informatikAI/nacimiento.mp4"
                             className="bridge-video"
                             autoPlay
                             loop
@@ -40,13 +40,13 @@ const StoryBridge = () => {
                         transition={{ delay: 0.5, duration: 0.6 }}
                     >
                         <p className="bridge-message">
-                            No partimos iguales.
+                            Mezclando nuestros conocimientos de ingeniería.
                         </p>
                         <p className="bridge-message">
-                            Partimos con la misma inquietud:
+                            Nuestra experiencia en distintas empresas.
                         </p>
                         <p className="bridge-highlight">
-                            <strong>¿Y si podemos llegar más lejos?</strong>
+                            <strong>Creamos software con Inteligencia Artificial</strong>
                         </p>
                     </motion.div>
 
@@ -58,18 +58,18 @@ const StoryBridge = () => {
                         transition={{ delay: 0.7, duration: 0.6 }}
                     >
                         <div className="stat-item">
-                            <div className="stat-icon">👩‍💻</div>
-                            <div className="stat-label">Promotora</div>
+                            <div className="stat-icon">💻</div>
+                            <div className="stat-label">Desarrollo de Software</div>
                         </div>
                         <div className="stat-plus">+</div>
                         <div className="stat-item">
-                            <div className="stat-icon">👨‍💻</div>
-                            <div className="stat-label">Ingeniero</div>
+                            <div className="stat-icon">🤖</div>
+                            <div className="stat-label">Inteligencia Artificial</div>
                         </div>
                         <div className="stat-equals">=</div>
                         <div className="stat-item stat-result">
                             <div className="stat-icon">🚀</div>
-                            <div className="stat-label">Propósito común</div>
+                            <div className="stat-label">Informatik-AI</div>
                         </div>
                     </motion.div>
 
@@ -80,7 +80,7 @@ const StoryBridge = () => {
                         viewport={{ once: true }}
                         transition={{ delay: 0.9, duration: 0.6 }}
                     >
-                        Pasado distinto → Propósito común
+                        También damos charlas y cursos personalizados 🎓
                     </motion.p>
                 </motion.div>
             </div>

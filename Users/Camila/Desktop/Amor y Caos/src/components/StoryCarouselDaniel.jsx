@@ -50,10 +50,16 @@ const StoryCarouselDaniel = () => {
             video: "/historiaDaniel/estudioIA.mp4"
         },
         {
-            year: "2024",
+            year: "2023",
             title: "Cami se convirtió en CamiDevAI",
             emoji: "🎥📚💙",
             video: "/historiaDaniel/camiDevAI.mp4"
+        },
+        {
+            year: "2023",
+            title: "Creamos informatik-ai",
+            emoji: "🎥📚💙",
+            video: "/historiaDaniel/informatik-ai.mp4"
         },
         {
             year: "2024",
