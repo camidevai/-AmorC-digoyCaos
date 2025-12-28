@@ -4,7 +4,6 @@ import StoryCarouselCami from './components/StoryCarouselCami';
 import StoryBridge from './components/StoryBridge';
 import StoryCarouselDaniel from './components/StoryCarouselDaniel';
 import AIExplanation from './components/AIExplanation';
-import PromptWorkshop from './components/PromptWorkshop';
 import AIHallucination from './components/AIHallucination';
 import Resources from './components/Resources';
 import FinalCTA from './components/FinalCTA';
@@ -38,17 +37,13 @@ function App() {
         {/* Section 5: AI Explanation */}
         <AIExplanation />
 
-        {/* Section 6: Prompt Workshop */}
-        <PromptWorkshop />
-
-
-        {/* Section 8: AI Hallucination */}
+        {/* Section 6: AI Hallucination */}
         <AIHallucination />
 
-        {/* Section 9: Resources */}
+        {/* Section 7: Resources */}
         <Resources />
 
-        {/* Section 10: Final CTA */}
+        {/* Section 8: Final CTA */}
         <FinalCTA />
       </main>
     </div>
