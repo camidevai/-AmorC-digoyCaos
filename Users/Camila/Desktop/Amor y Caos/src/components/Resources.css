@@ -11,9 +11,12 @@
 
 .resources-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: var(--spacing-xl);
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--spacing-2xl);
     margin-bottom: var(--spacing-3xl);
+    max-width: 1000px;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .resource-card {
@@ -148,6 +151,9 @@
     justify-content: center;
     position: relative;
     z-index: 1;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
 }
 
 .btn-primary {

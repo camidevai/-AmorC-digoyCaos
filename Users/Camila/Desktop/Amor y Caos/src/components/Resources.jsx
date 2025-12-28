@@ -1,36 +1,24 @@
 import { motion } from 'framer-motion';
-import { FaDownload, FaYoutube, FaCalendarAlt, FaDiscord, FaRocket } from 'react-icons/fa';
+import { FaRobot, FaInstagram } from 'react-icons/fa';
 import './Resources.css';
 
 const Resources = () => {
     const resources = [
         {
-            icon: <FaDownload />,
-            title: "Guía de Prompts",
-            description: "PDF descargable con las mejores prácticas para crear prompts efectivos.",
-            cta: "Descargar PDF",
+            icon: <FaRobot />,
+            title: "Agente Metaprompter",
+            description: "GPT personalizado que te ayuda a crear prompts efectivos y optimizados.",
+            cta: "Probar ahora",
+            url: "https://chatgpt.com/g/g-673cd7b9d09c8191bea546e97047b58e-metaprompter",
             color: "primary"
         },
         {
-            icon: <FaYoutube />,
-            title: "Playlist de Videos",
-            description: "Serie completa de tutoriales para aprender IA desde cero.",
-            cta: "Ver playlist",
+            icon: <FaInstagram />,
+            title: "Instagram @camidevai",
+            description: "Sígueme en Instagram donde comparto muchos recursos, tips y contenido sobre IA.",
+            cta: "Seguir en Instagram",
+            url: "https://www.instagram.com/camidevai/",
             color: "warm"
-        },
-        {
-            icon: <FaCalendarAlt />,
-            title: "Calendario de Talleres",
-            description: "Talleres prácticos y sesiones en vivo para profundizar tu aprendizaje.",
-            cta: "Ver calendario",
-            color: "tertiary"
-        },
-        {
-            icon: <FaDiscord />,
-            title: "Comunidad Discord",
-            description: "Únete a nuestra comunidad y aprende junto a otros entusiastas de la IA.",
-            cta: "Unirse ahora",
-            color: "secondary"
         }
     ];
 
@@ -68,25 +56,17 @@ const Resources = () => {
                             </div>
                             <h3 className="resource-title">{resource.title}</h3>
                             <p className="resource-description">{resource.description}</p>
-                            <button className={`btn btn-resource btn-${resource.color}`}>
+                            <a
+                                href={resource.url}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className={`btn btn-resource btn-${resource.color}`}
+                            >
                                 {resource.cta}
-                            </button>
+                            </a>
                         </motion.div>
                     ))}
                 </div>
-
-                {/* Main CTA */}
-                <motion.div
-                    className="resources-cta"
-                    initial={{ opacity: 0, y: 30 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 0.6 }}
-                >
-                    <button className="btn btn-primary btn-large">
-                        <FaRocket /> Empieza tu primer proyecto hoy
-                    </button>
-                </motion.div>
             </div>
         </section>
     );

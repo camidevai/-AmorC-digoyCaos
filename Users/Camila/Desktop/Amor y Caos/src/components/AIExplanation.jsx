@@ -1,69 +1,166 @@
-import { motion } from 'framer-motion';
-import { useState } from 'react';
-import { FaBrain, FaRobot, FaCheckCircle, FaTimesCircle, FaPaperPlane } from 'react-icons/fa';
+import { motion, AnimatePresence } from 'framer-motion';
+import { useState, useEffect } from 'react';
+import { FaCheckCircle, FaTimesCircle, FaPlay, FaTrophy, FaQrcode } from 'react-icons/fa';
+import { QRCodeSVG } from 'qrcode.react';
+import gameService from '../services/gameService';
 import './AIExplanation.css';
 
 const AIExplanation = () => {
-    const [prompt, setPrompt] = useState('');
-    const [response, setResponse] = useState('');
+    const [gameState, setGameState] = useState(gameService.getState());
+    const [showQR, setShowQR] = useState(false);
+    const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
 
-    const cards = [
+    // Check if we're in vote mode (audience view)
+    const isVoteMode = new URLSearchParams(window.location.search).get('mode') === 'vote';
+
+    // Questions for the game
+    const questions = [
         {
-            icon: <FaTimesCircle />,
-            title: "Qué NO es IA",
-            items: [
-                "No tiene conciencia",
-                "No tiene emociones reales",
-                "No piensa como humanos",
-                "No tiene intenciones propias"
-            ],
-            color: "warm"
+            question: "La IA puede sentir emociones reales como los humanos",
+            answer: false,
+            explanation: "❌ FALSO: La IA no tiene conciencia ni emociones reales. Solo simula respuestas basadas en patrones de datos."
         },
         {
-            icon: <FaCheckCircle />,
-            title: "Qué SÍ es IA",
-            items: [
-                "Aprende patrones de datos",
-                "Predice resultados probables",
-                "Procesa información rápido",
-                "Se adapta con entrenamiento"
-            ],
-            color: "primary"
+            question: "La IA aprende de patrones en grandes cantidades de datos",
+            answer: true,
+            explanation: "✅ VERDADERO: La IA analiza millones de ejemplos para identificar patrones y hacer predicciones."
         },
         {
-            icon: <FaRobot />,
-            title: "Qué puede hacer",
-            items: [
-                "Automatizar tareas repetitivas",
-                "Generar código y contenido",
-                "Analizar grandes volúmenes",
-                "Asistir en decisiones"
-            ],
-            color: "tertiary"
+            question: "La IA puede crear contenido completamente original sin datos previos",
+            answer: false,
+            explanation: "❌ FALSO: La IA necesita datos de entrenamiento. No puede crear desde cero sin referencias previas."
         },
         {
-            icon: <FaBrain />,
-            title: "Qué NO puede (aún)",
-            items: [
-                "Tomar decisiones morales",
-                "Comprender emociones",
-                "Crear sin datos previos",
-                "Reemplazar juicio humano"
-            ],
-            color: "secondary"
+            question: "La IA puede automatizar tareas repetitivas y ahorrar tiempo",
+            answer: true,
+            explanation: "✅ VERDADERO: Una de las mejores aplicaciones de la IA es automatizar procesos repetitivos."
+        },
+        {
+            question: "La IA puede reemplazar completamente el juicio humano en decisiones importantes",
+            answer: false,
+            explanation: "❌ FALSO: La IA es una herramienta de apoyo. Las decisiones importantes requieren criterio humano."
+        },
+        {
+            question: "ChatGPT y otras IAs pueden generar código funcional",
+            answer: true,
+            explanation: "✅ VERDADERO: Las IAs modernas pueden generar código, pero siempre debe ser revisado por humanos."
         }
     ];
 
-    const handlePromptSubmit = (e) => {
-        e.preventDefault();
-        if (prompt.trim()) {
-            // Simulated AI response
-            setResponse(`Basándome en tu prompt "${prompt}", puedo ayudarte a: analizar el contexto, generar ideas relacionadas, y sugerir próximos pasos. ¿Qué te gustaría explorar primero?`);
+    useEffect(() => {
+        // Subscribe to game state changes
+        const unsubscribe = gameService.subscribe((newState) => {
+            setGameState(newState);
+        });
+
+        return unsubscribe;
+    }, []);
+
+    const handleStartQuestion = (index) => {
+        setCurrentQuestionIndex(index);
+        gameService.startQuestion(index);
+        setShowQR(true);
+    };
+
+    const handleShowResults = () => {
+        gameService.showResults();
+    };
+
+    const handleNextQuestion = () => {
+        if (currentQuestionIndex < questions.length - 1) {
+            handleStartQuestion(currentQuestionIndex + 1);
         }
     };
 
+    const handleVote = (answer) => {
+        const success = gameService.vote(answer);
+        if (success) {
+            // Show feedback
+            alert(answer ? '¡Votaste VERDADERO! ✅' : '¡Votaste FALSO! ❌');
+        }
+    };
+
+    const percentages = gameService.getPercentages();
+    const currentQuestion = questions[currentQuestionIndex];
+
+    // VOTE MODE - What audience sees on their phones
+    if (isVoteMode) {
+        return (
+            <section className="ai-explanation-section section vote-mode">
+                <div className="container">
+                    <motion.div
+                        className="vote-container"
+                        initial={{ opacity: 0, scale: 0.9 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        transition={{ duration: 0.5 }}
+                    >
+                        <h2 className="vote-title">🎮 IA: ¿Verdad o Mito?</h2>
+
+                        {gameState.gameState === 'waiting' && (
+                            <div className="waiting-message">
+                                <p>⏳ Esperando que comience la siguiente pregunta...</p>
+                            </div>
+                        )}
+
+                        {gameState.gameState === 'voting' && currentQuestion && (
+                            <div className="voting-active">
+                                <div className="question-number">
+                                    Pregunta {currentQuestionIndex + 1} de {questions.length}
+                                </div>
+                                <h3 className="question-text">{currentQuestion.question}</h3>
+
+                                <div className="vote-buttons">
+                                    <motion.button
+                                        className="vote-btn vote-btn-true"
+                                        onClick={() => handleVote(true)}
+                                        whileHover={{ scale: 1.05 }}
+                                        whileTap={{ scale: 0.95 }}
+                                    >
+                                        <FaCheckCircle /> VERDADERO
+                                    </motion.button>
+                                    <motion.button
+                                        className="vote-btn vote-btn-false"
+                                        onClick={() => handleVote(false)}
+                                        whileHover={{ scale: 1.05 }}
+                                        whileTap={{ scale: 0.95 }}
+                                    >
+                                        <FaTimesCircle /> FALSO
+                                    </motion.button>
+                                </div>
+
+                                <div className="vote-count">
+                                    {gameState.totalVotes} votos recibidos
+                                </div>
+                            </div>
+                        )}
+
+                        {gameState.gameState === 'results' && currentQuestion && (
+                            <div className="results-view">
+                                <h3 className="question-text">{currentQuestion.question}</h3>
+                                <div className="answer-reveal">
+                                    {currentQuestion.explanation}
+                                </div>
+                                <div className="vote-stats">
+                                    <div className="stat-bar">
+                                        <div className="stat-label">✅ Verdadero: {percentages.true}%</div>
+                                        <div className="stat-bar-fill" style={{ width: `${percentages.true}%` }}></div>
+                                    </div>
+                                    <div className="stat-bar">
+                                        <div className="stat-label">❌ Falso: {percentages.false}%</div>
+                                        <div className="stat-bar-fill stat-bar-false" style={{ width: `${percentages.false}%` }}></div>
+                                    </div>
+                                </div>
+                            </div>
+                        )}
+                    </motion.div>
+                </div>
+            </section>
+        );
+    }
+
+    // PRESENTER MODE - What you see on the big screen
     return (
-        <section className="ai-explanation-section section">
+        <section className="ai-explanation-section section presenter-mode">
             <div className="container">
                 <motion.div
                     initial={{ opacity: 0, y: 30 }}
@@ -72,80 +169,150 @@ const AIExplanation = () => {
                     transition={{ duration: 0.6 }}
                 >
                     <h2 className="text-center mb-md">
-                        🤖 ¿Qué es la <span className="gradient-text">IA</span> (de verdad)?
+                        🎮 <span className="gradient-text">IA: ¿Verdad o Mito?</span>
                     </h2>
                     <p className="section-subtitle text-center">
-                        Inteligencia Artificial = <span className="highlight">Patrones</span> + <span className="highlight">Predicciones</span> + <span className="highlight">Propósito humano</span>
+                        Juego interactivo en tiempo real - ¡Que la audiencia vote! 📱
                     </p>
                 </motion.div>
 
-                {/* Cards Grid */}
-                <div className="ai-cards-grid">
-                    {cards.map((card, index) => (
+                {/* QR Code Section */}
+                <AnimatePresence>
+                    {showQR && (
                         <motion.div
-                            key={index}
-                            className={`ai-card ai-card-${card.color}`}
-                            initial={{ opacity: 0, y: 30 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            viewport={{ once: true }}
-                            transition={{ delay: index * 0.1, duration: 0.5 }}
-                            whileHover={{ y: -10 }}
-                        >
-                            <div className="ai-card-icon">{card.icon}</div>
-                            <h3 className="ai-card-title">{card.title}</h3>
-                            <ul className="ai-card-list">
-                                {card.items.map((item, i) => (
-                                    <motion.li
-                                        key={i}
-                                        initial={{ opacity: 0, x: -20 }}
-                                        whileInView={{ opacity: 1, x: 0 }}
-                                        viewport={{ once: true }}
-                                        transition={{ delay: index * 0.1 + i * 0.1, duration: 0.3 }}
-                                    >
-                                        {item}
-                                    </motion.li>
-                                ))}
-                            </ul>
-                        </motion.div>
-                    ))}
-                </div>
-
-                {/* Interactive Prompt Box */}
-                <motion.div
-                    className="prompt-demo"
-                    initial={{ opacity: 0, y: 30 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 0.6 }}
-                >
-                    <h3 className="prompt-demo-title">
-                        🧪 Escribe un prompt y mira qué responde
-                    </h3>
-                    <form onSubmit={handlePromptSubmit} className="prompt-form">
-                        <input
-                            type="text"
-                            className="prompt-input"
-                            placeholder="Ej: Ayúdame a crear un plan de estudio para aprender IA..."
-                            value={prompt}
-                            onChange={(e) => setPrompt(e.target.value)}
-                        />
-                        <button type="submit" className="btn btn-primary">
-                            <FaPaperPlane /> Enviar
-                        </button>
-                    </form>
-
-                    {response && (
-                        <motion.div
-                            className="prompt-response"
-                            initial={{ opacity: 0, y: 20 }}
+                            className="qr-section"
+                            initial={{ opacity: 0, y: -20 }}
                             animate={{ opacity: 1, y: 0 }}
-                            transition={{ duration: 0.5 }}
+                            exit={{ opacity: 0, y: -20 }}
                         >
-                            <div className="response-label">Respuesta de la IA:</div>
-                            <p>{response}</p>
+                            <div className="qr-container">
+                                <QRCodeSVG
+                                    value={`${window.location.origin}${window.location.pathname}?mode=vote`}
+                                    size={200}
+                                    level="H"
+                                    includeMargin={true}
+                                />
+                                <p className="qr-instruction">
+                                    <FaQrcode /> Escanea para votar
+                                </p>
+                            </div>
                         </motion.div>
                     )}
-                </motion.div>
+                </AnimatePresence>
+
+                {/* Game Control Panel */}
+                <div className="game-panel">
+                    {gameState.gameState === 'waiting' && (
+                        <div className="question-selector">
+                            <h3>Selecciona una pregunta:</h3>
+                            <div className="questions-grid">
+                                {questions.map((q, index) => (
+                                    <motion.button
+                                        key={index}
+                                        className="question-card"
+                                        onClick={() => handleStartQuestion(index)}
+                                        whileHover={{ scale: 1.02 }}
+                                        whileTap={{ scale: 0.98 }}
+                                    >
+                                        <div className="question-number-badge">#{index + 1}</div>
+                                        <p>{q.question}</p>
+                                    </motion.button>
+                                ))}
+                            </div>
+                        </div>
+                    )}
+
+                    {gameState.gameState === 'voting' && currentQuestion && (
+                        <div className="voting-display">
+                            <div className="current-question-display">
+                                <div className="question-badge">
+                                    Pregunta {currentQuestionIndex + 1}/{questions.length}
+                                </div>
+                                <h3 className="big-question">{currentQuestion.question}</h3>
+                            </div>
+
+                            <div className="live-results">
+                                <h4>📊 Votos en vivo: {gameState.totalVotes}</h4>
+                                <div className="results-bars">
+                                    <div className="result-bar">
+                                        <span className="result-label">✅ VERDADERO</span>
+                                        <div className="bar-container">
+                                            <motion.div
+                                                className="bar-fill bar-true"
+                                                initial={{ width: 0 }}
+                                                animate={{ width: `${percentages.true}%` }}
+                                                transition={{ duration: 0.5 }}
+                                            >
+                                                <span className="bar-percentage">{percentages.true}%</span>
+                                            </motion.div>
+                                        </div>
+                                        <span className="vote-count">{gameState.votes.true || 0} votos</span>
+                                    </div>
+                                    <div className="result-bar">
+                                        <span className="result-label">❌ FALSO</span>
+                                        <div className="bar-container">
+                                            <motion.div
+                                                className="bar-fill bar-false"
+                                                initial={{ width: 0 }}
+                                                animate={{ width: `${percentages.false}%` }}
+                                                transition={{ duration: 0.5 }}
+                                            >
+                                                <span className="bar-percentage">{percentages.false}%</span>
+                                            </motion.div>
+                                        </div>
+                                        <span className="vote-count">{gameState.votes.false || 0} votos</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <button className="btn btn-primary btn-large" onClick={handleShowResults}>
+                                <FaTrophy /> Mostrar Respuesta
+                            </button>
+                        </div>
+                    )}
+
+                    {gameState.gameState === 'results' && currentQuestion && (
+                        <div className="results-display">
+                            <h3 className="big-question">{currentQuestion.question}</h3>
+
+                            <motion.div
+                                className="answer-box"
+                                initial={{ scale: 0.8, opacity: 0 }}
+                                animate={{ scale: 1, opacity: 1 }}
+                                transition={{ type: "spring", duration: 0.6 }}
+                            >
+                                {currentQuestion.explanation}
+                            </motion.div>
+
+                            <div className="final-stats">
+                                <div className="stat-item">
+                                    <span className="stat-value">{percentages.true}%</span>
+                                    <span className="stat-label">Votaron Verdadero</span>
+                                </div>
+                                <div className="stat-item">
+                                    <span className="stat-value">{percentages.false}%</span>
+                                    <span className="stat-label">Votaron Falso</span>
+                                </div>
+                                <div className="stat-item">
+                                    <span className="stat-value">{gameState.totalVotes}</span>
+                                    <span className="stat-label">Total de Votos</span>
+                                </div>
+                            </div>
+
+                            <div className="control-buttons">
+                                {currentQuestionIndex < questions.length - 1 ? (
+                                    <button className="btn btn-primary btn-large" onClick={handleNextQuestion}>
+                                        <FaPlay /> Siguiente Pregunta
+                                    </button>
+                                ) : (
+                                    <button className="btn btn-secondary btn-large" onClick={() => gameService.reset()}>
+                                        🎮 Reiniciar Juego
+                                    </button>
+                                )}
+                            </div>
+                        </div>
+                    )}
+                </div>
             </div>
         </section>
     );
