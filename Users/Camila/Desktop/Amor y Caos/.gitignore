@@ -43,3 +43,34 @@ coverage
 .parcel-cache
 .eslintcache
 
+# Windows System Files
+$Recycle.Bin/
+*.lnk
+desktop.ini
+Thumbs.db
+*.tmp
+
+# Ignore everything outside project directory
+/*
+!/Users/
+/Users/*
+!/Users/Camila/
+/Users/Camila/*
+!/Users/Camila/Desktop/
+/Users/Camila/Desktop/*
+!/Users/Camila/Desktop/Amor y Caos/
+
+# System directories
+/Windows/
+/Program Files/
+/Program Files (x86)/
+/ProgramData/
+/Recovery/
+/System Volume Information/
+/$Recycle.Bin/
+/hiberfil.sys
+/pagefile.sys
+/swapfile.sys
+/DumpStack.log.tmp
+/OneDriveTemp/
+
