@@ -1,5 +1,29 @@
 # 🎮 Juego Interactivo: IA ¿Verdad o Mito?
 
+## 🔧 Configuración Inicial en Supabase (SOLO UNA VEZ)
+
+### Pasos para configurar la base de datos:
+
+1. **Ir al SQL Editor de Supabase:**
+   - Ve a: https://supabase.com/dashboard/project/avqcfefaershlcffzotw
+   - Haz clic en **"SQL Editor"** en el menú lateral
+   - Haz clic en **"New query"**
+
+2. **Ejecutar el SQL:**
+   - Abre el archivo `supabase-setup.sql` de este proyecto
+   - Copia TODO el contenido
+   - Pégalo en el editor SQL de Supabase
+   - Haz clic en **"Run"** (botón verde)
+
+3. **Habilitar Realtime:**
+   - Ve a **"Database"** → **"Replication"** en el menú lateral
+   - Busca la tabla `game_state` en la lista
+   - Activa el toggle para habilitar Realtime
+
+✅ **¡Listo!** Ahora el juego funcionará en tiempo real con sincronización entre todos los dispositivos.
+
+---
+
 ## 📋 Cómo usar el juego en la charla
 
 ### Para los Presentadores (Cami & Dani):

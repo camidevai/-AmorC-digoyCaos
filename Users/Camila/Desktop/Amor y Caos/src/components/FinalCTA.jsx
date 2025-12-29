@@ -5,8 +5,8 @@ import './FinalCTA.css';
 const FinalCTA = () => {
     const takeaways = [
         "Una historia real de transformación",
-        "Una base sólida de Inteligencia Artificial",
-        "Un taller práctico de prompts",
+        "Un juego interactivo IA: ¿Verdad o Mito?",
+        "conocimientos sobre por qué la IA alucina",
         "Una nueva forma de pensar sobre tecnología"
     ];
 

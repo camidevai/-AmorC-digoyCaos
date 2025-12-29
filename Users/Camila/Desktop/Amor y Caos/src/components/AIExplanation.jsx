@@ -48,12 +48,18 @@ const AIExplanation = () => {
     ];
 
     useEffect(() => {
+        // Initialize game service with Supabase
+        gameService.init();
+
         // Subscribe to game state changes
         const unsubscribe = gameService.subscribe((newState) => {
             setGameState(newState);
         });
 
-        return unsubscribe;
+        return () => {
+            unsubscribe();
+            // Don't cleanup Supabase connection here as other components might use it
+        };
     }, []);
 
     const handleStartQuestion = (index) => {

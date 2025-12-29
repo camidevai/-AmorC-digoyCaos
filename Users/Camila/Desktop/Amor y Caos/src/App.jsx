@@ -8,6 +8,7 @@ import AIHallucination from './components/AIHallucination';
 import Resources from './components/Resources';
 import FinalCTA from './components/FinalCTA';
 import FloatingHelp from './components/FloatingHelp';
+import FloatingQR from './components/FloatingQR';
 import './App.css';
 
 function App() {
@@ -20,6 +21,9 @@ function App() {
     <div className="App">
       {/* Floating Help Button */}
       <FloatingHelp />
+
+      {/* Floating QR Code */}
+      <FloatingQR />
 
       {/* Main Content */}
       <main>
