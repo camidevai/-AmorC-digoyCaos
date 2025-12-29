@@ -68,6 +68,8 @@ const AIExplanation = () => {
     const handleInitGame = () => {
         setGameStarted(true);
         setShowQR(true);
+        // Automatically start with the first question
+        gameService.startQuestion(0);
     };
 
     const handleStartQuestion = (index) => {
