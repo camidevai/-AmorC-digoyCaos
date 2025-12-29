@@ -133,6 +133,28 @@
     animation: slideIn 0.5s ease-out;
 }
 
+.vote-confirmed {
+    text-align: center;
+    padding: var(--spacing-2xl);
+    background: rgba(46, 213, 115, 0.1);
+    border: 2px solid rgba(46, 213, 115, 0.5);
+    border-radius: var(--radius-xl);
+    margin-top: var(--spacing-xl);
+}
+
+.vote-confirmed-message {
+    font-size: 1.8rem;
+    color: #2ed573;
+    font-weight: 700;
+    margin-bottom: var(--spacing-md);
+}
+
+.vote-confirmed-subtitle {
+    font-size: 1.2rem;
+    color: var(--color-light-gray);
+    margin-bottom: var(--spacing-lg);
+}
+
 .question-number {
     text-align: center;
     color: var(--color-tertiary);

@@ -9,6 +9,7 @@ const AIExplanation = () => {
     const [gameState, setGameState] = useState(gameService.getState());
     const [showQR, setShowQR] = useState(false);
     const [gameStarted, setGameStarted] = useState(false);
+    const [hasVoted, setHasVoted] = useState(false);
 
     // Check if we're in vote mode (audience view)
     const isVoteMode = new URLSearchParams(window.location.search).get('mode') === 'vote';
@@ -65,6 +66,13 @@ const AIExplanation = () => {
         };
     }, []);
 
+    // Check if user has voted for current question
+    useEffect(() => {
+        const voteKey = `voted_q${gameState.currentQuestion}`;
+        const voted = localStorage.getItem(voteKey);
+        setHasVoted(!!voted);
+    }, [gameState.currentQuestion]);
+
     const handleInitGame = () => {
         setGameStarted(true);
         setShowQR(true);
@@ -87,11 +95,15 @@ const AIExplanation = () => {
         }
     };
 
-    const handleVote = (answer) => {
-        const success = gameService.vote(answer);
+    const handleVote = async (answer) => {
+        const success = await gameService.vote(answer);
         if (success) {
+            setHasVoted(true);
             // Show feedback
             alert(answer ? '¡Votaste VERDADERO! ✅' : '¡Votaste FALSO! ❌');
+        } else {
+            // User already voted
+            alert('⚠️ Ya votaste en esta pregunta');
         }
     };
 
@@ -124,28 +136,44 @@ const AIExplanation = () => {
                                 </div>
                                 <h3 className="question-text">{currentQuestion.question}</h3>
 
-                                <div className="vote-buttons">
-                                    <motion.button
-                                        className="vote-btn vote-btn-true"
-                                        onClick={() => handleVote(true)}
-                                        whileHover={{ scale: 1.05 }}
-                                        whileTap={{ scale: 0.95 }}
-                                    >
-                                        <FaCheckCircle /> VERDADERO
-                                    </motion.button>
-                                    <motion.button
-                                        className="vote-btn vote-btn-false"
-                                        onClick={() => handleVote(false)}
-                                        whileHover={{ scale: 1.05 }}
-                                        whileTap={{ scale: 0.95 }}
-                                    >
-                                        <FaTimesCircle /> FALSO
-                                    </motion.button>
-                                </div>
+                                {hasVoted ? (
+                                    <div className="vote-confirmed">
+                                        <p className="vote-confirmed-message">
+                                            ✅ ¡Tu voto ha sido registrado!
+                                        </p>
+                                        <p className="vote-confirmed-subtitle">
+                                            Espera a que el presentador muestre los resultados
+                                        </p>
+                                        <div className="vote-count">
+                                            {gameState.totalVotes} votos recibidos
+                                        </div>
+                                    </div>
+                                ) : (
+                                    <>
+                                        <div className="vote-buttons">
+                                            <motion.button
+                                                className="vote-btn vote-btn-true"
+                                                onClick={() => handleVote(true)}
+                                                whileHover={{ scale: 1.05 }}
+                                                whileTap={{ scale: 0.95 }}
+                                            >
+                                                <FaCheckCircle /> VERDADERO
+                                            </motion.button>
+                                            <motion.button
+                                                className="vote-btn vote-btn-false"
+                                                onClick={() => handleVote(false)}
+                                                whileHover={{ scale: 1.05 }}
+                                                whileTap={{ scale: 0.95 }}
+                                            >
+                                                <FaTimesCircle /> FALSO
+                                            </motion.button>
+                                        </div>
 
-                                <div className="vote-count">
-                                    {gameState.totalVotes} votos recibidos
-                                </div>
+                                        <div className="vote-count">
+                                            {gameState.totalVotes} votos recibidos
+                                        </div>
+                                    </>
+                                )}
                             </div>
                         )}
 
