@@ -8,6 +8,7 @@ import './AIExplanation.css';
 const AIExplanation = () => {
     const [gameState, setGameState] = useState(gameService.getState());
     const [showQR, setShowQR] = useState(false);
+    const [gameStarted, setGameStarted] = useState(false);
 
     // Check if we're in vote mode (audience view)
     const isVoteMode = new URLSearchParams(window.location.search).get('mode') === 'vote';
@@ -63,6 +64,11 @@ const AIExplanation = () => {
             // Don't cleanup Supabase connection here as other components might use it
         };
     }, []);
+
+    const handleInitGame = () => {
+        setGameStarted(true);
+        setShowQR(true);
+    };
 
     const handleStartQuestion = (index) => {
         gameService.startQuestion(index);
@@ -183,6 +189,29 @@ const AIExplanation = () => {
                     </p>
                 </motion.div>
 
+                {/* Initial State - Show "Iniciar Juego" button */}
+                {!gameStarted && gameState.gameState === 'waiting' && (
+                    <motion.div
+                        className="init-game-container"
+                        initial={{ opacity: 0, scale: 0.9 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        transition={{ duration: 0.5 }}
+                    >
+                        <div className="init-game-content">
+                            <h3>¿Listo para comenzar?</h3>
+                            <p>Presiona el botón para mostrar el QR y que la audiencia pueda votar</p>
+                            <motion.button
+                                className="btn-init-game"
+                                onClick={handleInitGame}
+                                whileHover={{ scale: 1.05 }}
+                                whileTap={{ scale: 0.95 }}
+                            >
+                                <FaPlay /> Iniciar Juego
+                            </motion.button>
+                        </div>
+                    </motion.div>
+                )}
+
                 {/* QR Code Section */}
                 <AnimatePresence>
                     {showQR && (
@@ -209,7 +238,7 @@ const AIExplanation = () => {
 
                 {/* Game Control Panel */}
                 <div className="game-panel">
-                    {gameState.gameState === 'waiting' && (
+                    {gameStarted && gameState.gameState === 'waiting' && (
                         <div className="question-selector">
                             <h3>Selecciona una pregunta:</h3>
                             <div className="questions-grid">
