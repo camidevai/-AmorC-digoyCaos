@@ -10,6 +10,11 @@ CREATE TABLE IF NOT EXISTS game_state (
 -- Enable Row Level Security (RLS)
 ALTER TABLE game_state ENABLE ROW LEVEL SECURITY;
 
+-- Drop existing policies if they exist
+DROP POLICY IF EXISTS "Allow public read access" ON game_state;
+DROP POLICY IF EXISTS "Allow public insert access" ON game_state;
+DROP POLICY IF EXISTS "Allow public update access" ON game_state;
+
 -- Create policy to allow anyone to read
 CREATE POLICY "Allow public read access"
     ON game_state
@@ -36,5 +41,6 @@ VALUES ('game-session-1', 0, '{"true": 0, "false": 0}'::jsonb, 'waiting')
 ON CONFLICT (id) DO NOTHING;
 
 -- Enable realtime for this table
-ALTER PUBLICATION supabase_realtime ADD TABLE game_state;
+-- Note: If you get an error that the table is already in the publication,
+-- you can safely ignore it or manually remove it first from the Supabase UI
 
