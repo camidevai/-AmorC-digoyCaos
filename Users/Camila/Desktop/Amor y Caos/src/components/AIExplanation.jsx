@@ -8,10 +8,12 @@ import './AIExplanation.css';
 const AIExplanation = () => {
     const [gameState, setGameState] = useState(gameService.getState());
     const [showQR, setShowQR] = useState(false);
-    const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
 
     // Check if we're in vote mode (audience view)
     const isVoteMode = new URLSearchParams(window.location.search).get('mode') === 'vote';
+
+    // Use currentQuestion from gameState (synced with Supabase)
+    const currentQuestionIndex = gameState.currentQuestion;
 
     // Questions for the game
     const questions = [
@@ -63,7 +65,6 @@ const AIExplanation = () => {
     }, []);
 
     const handleStartQuestion = (index) => {
-        setCurrentQuestionIndex(index);
         gameService.startQuestion(index);
         setShowQR(true);
     };
@@ -74,7 +75,7 @@ const AIExplanation = () => {
 
     const handleNextQuestion = () => {
         if (currentQuestionIndex < questions.length - 1) {
-            handleStartQuestion(currentQuestionIndex + 1);
+            gameService.startQuestion(currentQuestionIndex + 1);
         }
     };
 

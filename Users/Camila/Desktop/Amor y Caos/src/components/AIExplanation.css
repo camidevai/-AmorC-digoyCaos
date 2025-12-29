@@ -20,10 +20,16 @@
 /* ========== VOTE MODE (Mobile View) ========== */
 .vote-mode {
     background: linear-gradient(135deg, var(--color-dark) 0%, var(--color-dark-secondary) 100%);
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
 }
 
 .vote-container {
     max-width: 600px;
+    width: 100%;
     margin: 0 auto;
     padding: var(--spacing-2xl);
 }
@@ -44,11 +50,27 @@
     background: rgba(92, 136, 252, 0.1);
     border-radius: var(--radius-xl);
     border: 2px dashed var(--color-tertiary);
+    animation: pulse 2s ease-in-out infinite;
 }
 
 .waiting-message p {
     font-size: 1.5rem;
     color: var(--color-light-gray);
+    line-height: 1.6;
+}
+
+@keyframes pulse {
+
+    0%,
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+
+    50% {
+        opacity: 0.8;
+        transform: scale(0.98);
+    }
 }
 
 .voting-active {

@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import Hero from './components/Hero';
 import StoryCarouselCami from './components/StoryCarouselCami';
 import StoryBridge from './components/StoryBridge';
@@ -12,11 +12,27 @@ import FloatingQR from './components/FloatingQR';
 import './App.css';
 
 function App() {
+  const [isVoteMode, setIsVoteMode] = useState(false);
+
   useEffect(() => {
     // Smooth scroll behavior
     document.documentElement.style.scrollBehavior = 'smooth';
+
+    // Check if we're in vote mode
+    const urlParams = new URLSearchParams(window.location.search);
+    setIsVoteMode(urlParams.get('mode') === 'vote');
   }, []);
 
+  // If in vote mode, render ONLY the voting interface
+  if (isVoteMode) {
+    return (
+      <div className="App vote-mode-only">
+        <AIExplanation />
+      </div>
+    );
+  }
+
+  // Normal presentation mode - render everything
   return (
     <div className="App">
       {/* Floating Help Button */}
