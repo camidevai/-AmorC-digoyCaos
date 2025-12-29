@@ -200,8 +200,6 @@ const AIExplanation = () => {
                         transition={{ duration: 0.5 }}
                     >
                         <div className="init-game-content">
-                            <h3>¿Listo para comenzar?</h3>
-                            <p>Presiona el botón para mostrar el QR y que la audiencia pueda votar</p>
                             <motion.button
                                 className="btn-init-game"
                                 onClick={handleInitGame}
@@ -271,36 +269,7 @@ const AIExplanation = () => {
 
                             <div className="live-results">
                                 <h4>📊 Votos en vivo: {gameState.totalVotes}</h4>
-                                <div className="results-bars">
-                                    <div className="result-bar">
-                                        <span className="result-label">✅ VERDADERO</span>
-                                        <div className="bar-container">
-                                            <motion.div
-                                                className="bar-fill bar-true"
-                                                initial={{ width: 0 }}
-                                                animate={{ width: `${percentages.true}%` }}
-                                                transition={{ duration: 0.5 }}
-                                            >
-                                                <span className="bar-percentage">{percentages.true}%</span>
-                                            </motion.div>
-                                        </div>
-                                        <span className="vote-count">{gameState.votes.true || 0} votos</span>
-                                    </div>
-                                    <div className="result-bar">
-                                        <span className="result-label">❌ FALSO</span>
-                                        <div className="bar-container">
-                                            <motion.div
-                                                className="bar-fill bar-false"
-                                                initial={{ width: 0 }}
-                                                animate={{ width: `${percentages.false}%` }}
-                                                transition={{ duration: 0.5 }}
-                                            >
-                                                <span className="bar-percentage">{percentages.false}%</span>
-                                            </motion.div>
-                                        </div>
-                                        <span className="vote-count">{gameState.votes.false || 0} votos</span>
-                                    </div>
-                                </div>
+                                <p className="vote-instruction">Los resultados se mostrarán al presionar "Mostrar Respuesta"</p>
                             </div>
 
                             <button className="btn btn-primary btn-large" onClick={handleShowResults}>
